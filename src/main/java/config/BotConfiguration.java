@@ -4,7 +4,8 @@ public class BotConfiguration {
 
     public static String HELP_TEXT = """
             
-            /help -> modifica
+            /help -> lista comandi
+            /joke -> racconta una barzelletta
             
             
             """;
