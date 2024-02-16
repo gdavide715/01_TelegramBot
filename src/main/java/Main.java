@@ -8,6 +8,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import modules.JokeModule;
 
 public class Main {
 
@@ -20,7 +21,8 @@ public class Main {
         ArrayList<BotModule> modules = new ArrayList<>(Arrays.asList(
                 // TODO: registrare tutti i moduli presenti
                 new HelloModule(),
-                new HelpModule()
+                new HelpModule(),
+                new JokeModule()
         ));
 
         bot.registerBot(new MultiApiTelegramBot(modules));
