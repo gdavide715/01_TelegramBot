@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import modules.JokeModule;
+import modules.WeatherModule;
 
 public class Main {
 
@@ -22,7 +23,8 @@ public class Main {
                 // TODO: registrare tutti i moduli presenti
                 new HelloModule(),
                 new HelpModule(),
-                new JokeModule()
+                new JokeModule(),
+                new WeatherModule()
         ));
 
         bot.registerBot(new MultiApiTelegramBot(modules));
