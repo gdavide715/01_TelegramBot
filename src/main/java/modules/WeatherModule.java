@@ -21,7 +21,7 @@ public class WeatherModule extends BotModule{
     
     public WeatherModule() {
         super("/weather");
-        super.activate();
+        //super.activate();
     }
     
 
@@ -29,13 +29,17 @@ public class WeatherModule extends BotModule{
     public BotApiMethod<Message> handleCommand(Update update) {
         
         SendMessage m = new SendMessage();
-        if(super.isActive()){
+        String s = update.getMessage().getText();
+        System.out.println(s);
+        
             
-            
-            m.setChatId(update.getMessage().getChatId());
-            
+        if(s.equalsIgnoreCase("/close")){
+                super.deactivate();
+            }
+        else if(this.isActive()){
+                
+                m.setChatId(update.getMessage().getChatId());
             String location = update.getMessage().getText().trim();
-            if(!location.equals("/weather")){
                 OkHttpClient client = new OkHttpClient();
                 Request request = new Request.Builder()
                     .url("http://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + OPENWEATHERMAP_API_KEY)
@@ -64,11 +68,16 @@ public class WeatherModule extends BotModule{
                 } else {
                     m.setText("Non è stato possibile ottenere le informazioni sul meteo per " + location + ".");
                 }
-                super.deactivate();
-            } else {
-                m.setText("Inserisci città");
-            }
+                
+            
         }
+        else{
+            
+            m.setText("Inserisci città");
+            //System.out.println(m.getText());
+            super.activate();
+        }
+        
         return m;
         
     }
