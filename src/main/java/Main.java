@@ -14,6 +14,7 @@ import modules.DictionaryModule;
 import modules.ImageModule;
 import modules.JokeModule;
 import modules.LyricsModule;
+import modules.Mp3Module;
 import modules.QuoteModule;
 import modules.QuoteTrumpModule;
 import modules.RecipeModule;
@@ -44,7 +45,8 @@ public class Main {
                 new ImageModule(),
                 new RecipeModule(),
                 new WorkoutModule(),
-                new CurrencyModule()
+                new CurrencyModule(),
+                new Mp3Module()
         ));
 
         bot.registerBot(new MultiApiTelegramBot(modules));

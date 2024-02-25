@@ -17,6 +17,7 @@ public class BotConfiguration {
             /recipe -> ricetta e poi il piatto del quale si vuole
             /workout -> esercizi in base al muscolo
             /currency -> cambio valuta
+            /mp3 -> mp3
             """;
 
 }

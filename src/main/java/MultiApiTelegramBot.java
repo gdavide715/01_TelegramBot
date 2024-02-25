@@ -18,6 +18,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javassist.CtMethod.ConstParameter.string;
 import modules.ImageModule;
+import modules.Mp3Module;
+import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 
@@ -72,7 +74,28 @@ public class MultiApiTelegramBot extends TelegramLongPollingBot {
             } catch (IOException ex) {
                 Logger.getLogger(MultiApiTelegramBot.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
+        }else if(update.getMessage().getText().startsWith("/mp3")){
+            SendAudio sendAudio = new SendAudio();
+            sendAudio.setChatId(update.getMessage().getChatId().toString());
+            String t = "";
+            String target[] = update.getMessage().getText().trim().split(",");
+            String comando = target[0].trim(); // Replace with your desired artist
+            String cerca = target[1].trim(); // Replace with your desired song title
+            try {
+                t = (String) Mp3Module.link(cerca);
+            } catch (JsonProcessingException ex) {
+                Logger.getLogger(MultiApiTelegramBot.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MultiApiTelegramBot.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MultiApiTelegramBot.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            sendAudio.setAudio(new InputFile(t));
+            try {
+                execute(sendAudio);
+            } catch (TelegramApiException ex) {
+                Logger.getLogger(MultiApiTelegramBot.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         
