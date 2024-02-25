@@ -8,10 +8,18 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import modules.CocktailModule;
+import modules.CurrencyModule;
+import modules.DictionaryModule;
+import modules.ImageModule;
 import modules.JokeModule;
+import modules.LyricsModule;
 import modules.QuoteModule;
+import modules.QuoteTrumpModule;
+import modules.RecipeModule;
 import modules.TranslateModule;
 import modules.WeatherModule;
+import modules.WorkoutModule;
 
 public class Main {
 
@@ -28,7 +36,15 @@ public class Main {
                 new JokeModule(),
                 new WeatherModule(),
                 new TranslateModule(),
-                new QuoteModule()
+                new QuoteModule(),
+                new CocktailModule(),
+                new DictionaryModule(),
+                new LyricsModule(),
+                new QuoteTrumpModule(),
+                new ImageModule(),
+                new RecipeModule(),
+                new WorkoutModule(),
+                new CurrencyModule()
         ));
 
         bot.registerBot(new MultiApiTelegramBot(modules));

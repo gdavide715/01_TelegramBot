@@ -9,6 +9,14 @@ public class BotConfiguration {
             /weather -> Restituisce il meteo data una città
             /traduci -> restituisce la traduzione
             /quote -> messaggio filosofico
+            /quoteTrump -> messaggio Trump
+            /cocktail -> random cocktail
+            /dictionary -> definizione di una parola
+            /lyrics -> testo di una canzone, inserire artista, nome canzone
+            /img -> immagine (/img, nome)
+            /recipe -> ricetta e poi il piatto del quale si vuole
+            /workout -> esercizi in base al muscolo
+            /currency -> cambio valuta
             """;
 
 }
