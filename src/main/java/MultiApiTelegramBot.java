@@ -74,7 +74,7 @@ public class MultiApiTelegramBot extends TelegramLongPollingBot {
             } catch (IOException ex) {
                 Logger.getLogger(MultiApiTelegramBot.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else if(update.getMessage().getText().startsWith("/shortLink")){
+        }else if(update.getMessage().getText().startsWith("/mp3")){
             SendAudio sendAudio = new SendAudio();
             sendAudio.setChatId(update.getMessage().getChatId().toString());
             String t = "";
