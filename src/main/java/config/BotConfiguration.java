@@ -20,6 +20,7 @@ public class BotConfiguration {
             /mp3 -> mp3
             /goggins -> video motivazionale
             /circolari -> ultime circolari scolastiche
+            /news -> ultime notizie
             """;
 
 }

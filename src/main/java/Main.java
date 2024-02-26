@@ -17,6 +17,7 @@ import modules.ImageModule;
 import modules.JokeModule;
 import modules.LyricsModule;
 import modules.Mp3Module;
+import modules.NewsModule;
 import modules.QuoteModule;
 import modules.QuoteTrumpModule;
 import modules.RecipeModule;
@@ -50,7 +51,8 @@ public class Main {
                 new CurrencyModule(),
                 new Mp3Module(),
                 new DavidGogginsModule(),
-                new CircolariModule()
+                new CircolariModule(),
+                new NewsModule()
         ));
 
         bot.registerBot(new MultiApiTelegramBot(modules));
