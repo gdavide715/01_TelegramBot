@@ -32,7 +32,7 @@ public class CircolariModule extends BotModule {
 
             String response = "";
             int count = 0;
-            
+
             for (Element circolare : circolari) {
                 if (count >= 3) { // Esce dopo aver trovato le prime tre circolari
                     break;
@@ -43,26 +43,39 @@ public class CircolariModule extends BotModule {
                         + circolare.select(".card-body .date .month").text() + "-"
                         + circolare.select(".card-body .date .day").text();
 
-                
-
                 if (!nomeCircolare.equals("")) {
 
                     response += "Titolo: " + nomeCircolare + "\nData: " + dataPubblicazione;
                     count++;
-                        
-                        String linkCircolare = circolare.attr("href");
-                        System.out.println("PROVA: " + linkCircolare);
-                        
-                        Document d = Jsoup.connect(linkCircolare).get();
 
-                        // Selezioniamo l'elemento contenente il testo della circolare
-                        Element circolareElement = d.selectFirst(".wysiwig-text");
+                    String linkCircolare = circolare.attr("href");
 
-                        // Estraiamo il testo dalla classe .wysiwig-text
-                        String circolareText = circolareElement.text();
-                        
-                        response += "\nTesto della circolare: " + circolareText + "\n\n";
-                        
+                    Document d = Jsoup.connect(linkCircolare).get();
+
+                    // Selezioniamo l'elemento contenente il testo della circolare
+                    Element circolareElement = d.selectFirst(".wysiwig-text");
+
+                    // Estraiamo il testo dalla classe .wysiwig-text
+                    String circolareText = circolareElement.text();
+
+                    response += "\nTesto della circolare: " + circolareText;
+
+                    // Selezioniamo l'elemento che contiene il link al PDF
+                    Element pdfLinkElement = d.selectFirst("div.card-body a[href$=.pdf]");
+                    System.out.println("pdfLinkElement: " + pdfLinkElement);
+
+                    if (pdfLinkElement != null) {
+
+                        // Estraiamo l'URL dal link
+                        String pdfUrl = pdfLinkElement.attr("href");
+
+                        System.out.println("pdfUrl: " + pdfUrl);
+                        response += "\nPDF: " + pdfUrl + "\n\n";
+
+                    }else{
+                        response += "\nPDF: non presente\n\n";
+                    }
+
                 }
 
             }
