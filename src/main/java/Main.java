@@ -8,13 +8,16 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import modules.CircolariModule;
 import modules.CocktailModule;
 import modules.CurrencyModule;
+import modules.DavidGogginsModule;
 import modules.DictionaryModule;
 import modules.ImageModule;
 import modules.JokeModule;
 import modules.LyricsModule;
 import modules.Mp3Module;
+import modules.NewsModule;
 import modules.QuoteModule;
 import modules.QuoteTrumpModule;
 import modules.RecipeModule;
@@ -48,6 +51,9 @@ public class Main {
                 new WorkoutModule(),
                 new CurrencyModule(),
                 new Mp3Module(),
+                new DavidGogginsModule(),
+                new CircolariModule(),
+                new NewsModule(),
                 new ShortLinkModule()
         ));
 
