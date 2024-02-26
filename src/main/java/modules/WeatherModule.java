@@ -27,12 +27,12 @@ public class WeatherModule extends BotModule {
 
     public WeatherModule() {
         super("/weather");
-        super.activate();
+
     }
 
     @Override
     public BotApiMethod<Message> handleCommand(Update update) {
-
+        super.activate();
         SendMessage m = new SendMessage();
         if (super.isActive()) {
 
@@ -46,6 +46,7 @@ public class WeatherModule extends BotModule {
             } else if (messageText.equals("/forecast")) {
                 awaitingForecast = true;
                 awaitingCity = false;
+                m.setText("Inserisci il nome della città per ottenere il meteo.");
             } else if (messageText.equals("/city")) {
                 awaitingForecast = false;
                 awaitingCity = true;
@@ -53,20 +54,17 @@ public class WeatherModule extends BotModule {
             } else {
                 if (awaitingForecast) {
                     lastLocation = messageText;
-                    String weatherResponse = "errore";
-                    try {
-                        weatherResponse = getWeatherForecast();
-                    } catch (Exception ex) {
-                        Logger.getLogger(WeatherModule.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    m.setText(weatherResponse);
+                    String forecastResponse = getWeatherForecast(messageText);
+                    m.setText(forecastResponse);
                     awaitingForecast = false;
+                    super.deactivate();
                 } else if (awaitingCity) {
                     // Logica per ottenere il meteo attuale della città
                     lastLocation = messageText;
                     String weatherResponse = getCurrentWeather(messageText);
                     m.setText(weatherResponse);
                     awaitingCity = false;
+                    super.deactivate();
                 } else {
                     m.setText("Comando non riconosciuto. \n /forecast --> per sapere il meteo dei prossimi 4 giorni \n /city --> per avere il meteo attuale di una città a tua scelta");
                 }
@@ -101,19 +99,10 @@ public class WeatherModule extends BotModule {
         }
     }
 
-    private String getWeatherForecast() {
-        GeoLocationService g = new GeoLocationService();
-        double[] location;
-        try {
-            location = g.getCurrentLocationCoordinates();
-        } catch (Exception ex) {
-            Logger.getLogger(WeatherModule.class.getName()).log(Level.SEVERE, null, ex);
-            return "Si è verificato un errore durante l'ottenimento delle coordinate attuali.";
-        }
-
+    private String getWeatherForecast(String location) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("http://api.openweathermap.org/data/2.5/forecast?lat=" + location[0] + "&lon=" + location[1] + "&appid=" + OPENWEATHERMAP_API_KEY + "&lang=it")
+                .url("http://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid=" + OPENWEATHERMAP_API_KEY + "&lang=it")
                 .build();
         try {
             Response response = client.newCall(request).execute();
@@ -121,7 +110,7 @@ public class WeatherModule extends BotModule {
             JSONObject json = new JSONObject(responseData);
             JSONArray forecasts = json.getJSONArray("list");
 
-            StringBuilder forecastText = new StringBuilder("Previsioni del tempo per i prossimi 4 giorni a " + lastLocation + ":\n");
+            StringBuilder forecastText = new StringBuilder("Previsioni del tempo per i prossimi 4 giorni a " + location + ":\n");
 
             for (int i = 0; i < forecasts.length(); i++) {
                 JSONObject forecast = forecasts.getJSONObject(i);
@@ -143,7 +132,7 @@ public class WeatherModule extends BotModule {
             return forecastText.toString();
         } catch (IOException | JSONException ex) {
             Logger.getLogger(WeatherModule.class.getName()).log(Level.SEVERE, null, ex);
-            return "Si è verificato un errore durante la richiesta del meteo per " + lastLocation + ".";
+            return "Si è verificato un errore durante la richiesta del meteo per " + location + ".";
         }
     }
 
