@@ -18,6 +18,7 @@ public class BotConfiguration {
             /workout -> esercizi in base al muscolo
             /currency -> cambio valuta
             /mp3 -> mp3
+            /shortLink -> accorciare i link
             """;
 
 }

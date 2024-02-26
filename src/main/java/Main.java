@@ -18,6 +18,7 @@ import modules.Mp3Module;
 import modules.QuoteModule;
 import modules.QuoteTrumpModule;
 import modules.RecipeModule;
+import modules.ShortLinkModule;
 import modules.TranslateModule;
 import modules.WeatherModule;
 import modules.WorkoutModule;
@@ -46,7 +47,8 @@ public class Main {
                 new RecipeModule(),
                 new WorkoutModule(),
                 new CurrencyModule(),
-                new Mp3Module()
+                new Mp3Module(),
+                new ShortLinkModule()
         ));
 
         bot.registerBot(new MultiApiTelegramBot(modules));
