@@ -8,6 +8,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import modules.CircolariModule;
 import modules.CocktailModule;
 import modules.CurrencyModule;
 import modules.DavidGogginsModule;
@@ -48,7 +49,8 @@ public class Main {
                 new WorkoutModule(),
                 new CurrencyModule(),
                 new Mp3Module(),
-                new DavidGogginsModule()
+                new DavidGogginsModule(),
+                new CircolariModule()
         ));
 
         bot.registerBot(new MultiApiTelegramBot(modules));

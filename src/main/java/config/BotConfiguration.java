@@ -19,6 +19,7 @@ public class BotConfiguration {
             /currency -> cambio valuta
             /mp3 -> mp3
             /goggins -> video motivazionale
+            /circolari -> ultime circolari scolastiche
             """;
 
 }
