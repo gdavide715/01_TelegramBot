@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import modules.CocktailModule;
 import modules.CurrencyModule;
+import modules.DavidGogginsModule;
 import modules.DictionaryModule;
 import modules.ImageModule;
 import modules.JokeModule;
@@ -46,7 +47,8 @@ public class Main {
                 new RecipeModule(),
                 new WorkoutModule(),
                 new CurrencyModule(),
-                new Mp3Module()
+                new Mp3Module(),
+                new DavidGogginsModule()
         ));
 
         bot.registerBot(new MultiApiTelegramBot(modules));
