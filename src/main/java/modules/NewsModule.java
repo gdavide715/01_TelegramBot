@@ -35,7 +35,7 @@ public class NewsModule extends BotModule {
     }
 
     private String getTopHeadlines() {
-        String country = "us"; // Puoi cambiare il paese a tuo piacimento
+        String country = "it"; // Puoi cambiare il paese a tuo piacimento
         String category = "general"; // Puoi cambiare la categoria a tuo piacimento
         int count = 5; // Numero di notizie da ottenere
 
