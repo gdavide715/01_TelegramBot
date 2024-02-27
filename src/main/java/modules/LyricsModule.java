@@ -34,13 +34,14 @@ public class LyricsModule extends BotModule{
     @Override
     public BotApiMethod<Message> handleCommand(Update update) {
         SendMessage m = new SendMessage();
+        m.setChatId(update.getMessage().getChatId()); 
         String s = update.getMessage().getText();
+        
         System.out.println(s);
         if(s.equalsIgnoreCase("/close")){
                 super.deactivate();
             }
         else if(this.isActive()){
-            m.setChatId(update.getMessage().getChatId());
             String target[] = update.getMessage().getText().trim().split(",");
             String artist = target[0].trim(); // Replace with your desired artist
             String title = target[1].trim(); // Replace with your desired song title
@@ -90,7 +91,7 @@ public class LyricsModule extends BotModule{
             
             
         }else{
-            m.setText("Inserisci l'artista e la canzone");
+            m.setText("Inserisci: l'artista, canzone");
             super.activate();
         }
         

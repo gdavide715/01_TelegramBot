@@ -4,22 +4,14 @@
  */
 package modules;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import interfaces.BotModule;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
-import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.DefaultAsyncHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -29,15 +21,14 @@ import org.telegram.telegrambots.meta.api.objects.Update;
  *
  * @author taluk
  */
-public class RecipeModule extends BotModule{
+public class StockModule extends BotModule{
 
-    public RecipeModule() {
-        super("/recipe");
+    public StockModule() {
+        super("/stock");
     }
 
     @Override
     public BotApiMethod<Message> handleCommand(Update update) {
-      
         SendMessage m = new SendMessage();
         m.setChatId(update.getMessage().getChatId());
         String s = update.getMessage().getText();
@@ -45,59 +36,42 @@ public class RecipeModule extends BotModule{
                 super.deactivate();
             }
         else if(this.isActive()){
-            String t = "";
             try {
-            // API endpoint URL
-            String apiUrl = "https://www.themealdb.com/api/json/v1/1/search.php?s=" + s;
+            // Create URL
+            URL url = new URL("https://finnhub.io/api/v1/quote?symbol=" + s.trim() + "&token=cnf4r8pr01qi6ftoagagcnf4r8pr01qi6ftoagb0");
 
-            // Create URL object
-            URL url = new URL(apiUrl);
-
-            // Create connection object
+            // Create connection
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-            // Set request method
             connection.setRequestMethod("GET");
 
-            // Create BufferedReader to read the response
+            // Get response
+            int responseCode = connection.getResponseCode();
+            System.out.println("Response Code: " + responseCode);
+
+            // Read response
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String inputLine;
             StringBuilder response = new StringBuilder();
-
-            // Read the response line by line
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
-
-            // Close the BufferedReader
             in.close();
 
-            // Parse the JSON response
-            JSONObject jsonObject = new JSONObject(response.toString());
-
-            // Extract the meals array
-            JSONArray meals = jsonObject.getJSONArray("meals");
-
-            // Get the first object in the meals array
-            JSONObject mealObject = meals.getJSONObject(0);
-
-            // Extract the strInstructions field value
-            String strInstructions = mealObject.getString("strInstructions");
-
-            //Traduzione
-            //System.out.println(strInstructions);
+            // Remove curly braces and format JSON
+            String formattedResponse = response.toString()
+                    .replaceAll("[{}]", "") // Remove curly braces
+                    .replaceAll(",", ",\n"); // Add newline after commas
             
-            m.setText(strInstructions);
-            
-            
-            
-
+            // Print formatted response
+            String guida = "(c: prezzo attuale, d: differenza, dp: percentuale differenza, h: prezzo più alto della giornata, l: prezzo più basso della giornata, o: prezzo di apertura)\n\n" + s + "\n\n";
+            String t = guida + formattedResponse;
+            m.setText(t);
         } catch (IOException e) {
             e.printStackTrace();
         }
         }else{
             
-            m.setText("Inserisci piatto");
+            m.setText("Inserisci stock interessato (esempi: https://stockanalysis.com/stocks/)");
             //System.out.println(m.getText());
             super.activate();
         }

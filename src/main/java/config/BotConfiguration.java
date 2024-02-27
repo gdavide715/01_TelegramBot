@@ -22,6 +22,7 @@ public class BotConfiguration {
             /circolari -> ultime circolari scolastiche 🏫
             /news -> ultime notizie 📰
             /shortLink -> accorciare i link 🔗
+            /stock -> stock info 📈
             """;
 
 }

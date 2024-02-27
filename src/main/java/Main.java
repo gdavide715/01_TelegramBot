@@ -22,6 +22,7 @@ import modules.QuoteModule;
 import modules.QuoteTrumpModule;
 import modules.RecipeModule;
 import modules.ShortLinkModule;
+import modules.StockModule;
 import modules.TranslateModule;
 import modules.WeatherModule;
 import modules.WorkoutModule;
@@ -54,7 +55,8 @@ public class Main {
                 new DavidGogginsModule(),
                 new CircolariModule(),
                 new NewsModule(),
-                new ShortLinkModule()
+                new ShortLinkModule(),
+                new StockModule()
         ));
 
         bot.registerBot(new MultiApiTelegramBot(modules));

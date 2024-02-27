@@ -1,12 +1,20 @@
 package modules;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import okhttp3.Response;
 
 import interfaces.BotModule;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javax.ws.rs.sse.SseEventSource.target;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import org.asynchttpclient.AsyncHttpClient;
@@ -44,75 +52,66 @@ public class TranslateModule extends BotModule{
                 AsyncHttpClient client = new DefaultAsyncHttpClient();
                 String responseText = null;
                 String target[] = update.getMessage().getText().trim().split(",");
-                String lingua = target[0].trim();
-                String testo = target[1].trim();
+                String from = target[0].trim();
+                String to = target[1].trim();
+                String testo = target[2].trim();
         
         
-                try {
-                    org.asynchttpclient.Response response = client.prepare("POST", "https://google-translate1.p.rapidapi.com/language/translate/v2")
-                            .setHeader("content-type", "application/x-www-form-urlencoded")
-                            .setHeader("Accept-Encoding", "application/gzip")
-                            .setHeader("X-RapidAPI-Key", "354a3b0fc8mshd40cc9e85c8306bp164d92jsnd095b9f54ac9")
-                            .setHeader("X-RapidAPI-Host", "google-translate1.p.rapidapi.com")
-                            .setBody("source=it&target=" + lingua + "&q=" + testo)
-                            .execute()
-                            .toCompletableFuture()
-                            .get(); // Blocking call to get the response
+                String responseString = "";
+        try {
+            // Construct the URL with parameters
+            String urlString = "https://655.mtis.workers.dev/translate?text=" + testo + "&source_lang=" + from + "&target_lang=" + to;
+            URL url = new URL(urlString);
 
-                    if (response.getStatusCode() == 200) {
-                        responseText = response.getResponseBody();
-                    } else {
-                        System.out.println("Error: " + response.getStatusText());
-                    }
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                } finally {
-                            try {
-                                client.close();
-                            } catch (IOException ex) {
-                                Logger.getLogger(TranslateModule.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+            // Open a connection
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            // Set the request method
+            connection.setRequestMethod("GET");
+
+            // Get the response code
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) { // If response is successful
+                // Read the response
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
                 }
+                reader.close();
 
-                // Now you can work with the 'responseText' variable
-                if (responseText != null) {
-                    // Handle the response text
-                    System.out.println("Response: " + responseText);
-                } else {
-                    // Handle the case when response is null
-                    System.out.println("Response is null");
-                }
+                // Print the response
+                System.out.println("API Response: " + response.toString());
+                responseString = response.toString();
+            } else {
+                System.out.println("Error: HTTP " + responseCode);
+            }
+            
+            // Parse the JSON response
+            JsonObject jsonResponse = new Gson().fromJson(responseString, JsonObject.class);
 
+            // Extract the translated_text value
+            String translatedText = jsonResponse.getAsJsonObject("response").get("translated_text").getAsString();
 
-                try {
-                    // Parse the JSON response
-                    JSONObject jsonObject = new JSONObject(responseText);
+            // Print the translated text
+            System.out.println("Translated Text: " + translatedText);
+            m.setText(translatedText);
+            // Close the connection
+            connection.disconnect();
 
-                    // Extract the "translations" array
-                    JSONObject dataObject = jsonObject.getJSONObject("data");
-                    org.json.JSONArray translationsArray = dataObject.getJSONArray("translations");
-
-                    // Get the first item from the translations array
-                    JSONObject translationObject = translationsArray.getJSONObject(0);
-
-                    // Extract the "translatedText" value
-                    String translatedText = translationObject.getString("translatedText");
-
-                    // Print the translated text
-                    System.out.println("Translated Text: " + translatedText);
-                    m.setText(translatedText);
-                } catch (JSONException e) {
-                    // Handle any parsing errors
-                    System.out.println("Error parsing JSON: " + e.getMessage());
-                }
-                
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         else{
             super.activate();
+            m.setText("Inserisci: from, to, testo");
         }
         System.out.println(m.getText());
-        return m;
         
+        return m;
     }
     
 }
