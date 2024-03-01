@@ -2,6 +2,7 @@ package modules;
 
 import interfaces.BotModule;
 import java.io.IOException;
+import static java.lang.Integer.parseInt;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 import org.jsoup.Jsoup;
@@ -25,6 +26,12 @@ public class CircolariModule extends BotModule {
 
         SendMessage m = new SendMessage();
         m.setChatId(update.getMessage().getChatId());
+        String s = update.getMessage().getText();
+        
+        if(s.equalsIgnoreCase("/close")){
+            super.deactivate();
+        }else if(super.isActive()){
+            int num = parseInt(update.getMessage().getText());
 
         try {
             Document doc = Jsoup.connect(url).get();
@@ -34,7 +41,7 @@ public class CircolariModule extends BotModule {
             int count = 0;
 
             for (Element circolare : circolari) {
-                if (count >= 3) { // Esce dopo aver trovato le prime tre circolari
+                if (count >= num) { // Esce dopo aver trovato le prime tre circolari
                     break;
                 }
 
@@ -83,6 +90,13 @@ public class CircolariModule extends BotModule {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        }else{
+            super.activate();
+            m.setText("Inserisci numero di circolari:");
+        }
+            
+        
+        
 
         return m;
     }

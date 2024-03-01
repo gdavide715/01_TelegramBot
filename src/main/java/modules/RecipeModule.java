@@ -98,13 +98,13 @@ public class RecipeModule extends BotModule{
             
             AsyncHttpClient client = new DefaultAsyncHttpClient();
             
-            String testo = strInstructions.replace(" ", "+");
+            String testo = strInstructions;
             System.out.println(testo);
             
-            String tradotto = traduci(testo);
-            Thread.sleep(2000);
-            System.out.println(tradotto);
-            m.setText(tradotto);
+            
+            
+            //System.out.println(testo);
+            m.setText(testo);
         
                 // Define the URL
         
@@ -113,9 +113,7 @@ public class RecipeModule extends BotModule{
 
         } catch (IOException e) {
             e.printStackTrace();
-        }   catch (InterruptedException ex) {
-                Logger.getLogger(RecipeModule.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        }   
         }else{
             
             m.setText("Inserisci piatto");
@@ -129,12 +127,10 @@ public class RecipeModule extends BotModule{
     public String traduci(String frase){
         String s = "";
         
-        AsyncHttpClient client = new DefaultAsyncHttpClient();
-                
         
         
-                // Define the URL
-        String url = "https://api.microsofttranslator.com/V2/Ajax.svc/Translate?appId=DB50E2E9FBE2E92B103E696DCF4E3E512A8826FB&oncomplete=?&text=" + frase.trim() + "&from=en&to=it";
+        // Define the URL
+        String url = "https://api.microsofttranslator.com/V2/Ajax.svc/Translate?appId=DB50E2E9FBE2E92B103E696DCF4E3E512A8826FB&oncomplete=?&text=" + frase.trim() + "&from=&to=it";
 
         // Create an HttpClient
         HttpClient httpClient = HttpClient.newHttpClient();
@@ -170,6 +166,7 @@ public class RecipeModule extends BotModule{
 
             // Block and get the translation result
             s = translationResult.join();
+            System.out.println(s);
             
         
         return s;
