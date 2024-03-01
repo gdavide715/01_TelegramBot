@@ -21,7 +21,7 @@ public class BotConfiguration {
             /shortLink -> accorciare i link 🔗
             /stock -> stock info 📈
             /tempMail -> mail temporanea
-            /ITQuiz -> quiz informatica
+            /quiz -> quiz informatica
             """;
 
 }

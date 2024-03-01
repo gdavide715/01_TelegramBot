@@ -88,8 +88,8 @@ public class ShortLinkModule extends BotModule{
                     jsonString = response.toString();
                 }
             } else {
-                System.out.println("API call failed with status code: " + statusCode);
-                System.out.println("Response:");
+                //System.out.println("API call failed with status code: " + statusCode);
+                //System.out.println("Response:");
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "utf-8"))) {
                     String responseLine;
                     while ((responseLine = br.readLine()) != null) {
@@ -111,15 +111,16 @@ public class ShortLinkModule extends BotModule{
         String shrtlnk = jsonObject.getString("shrtlnk");
 
         // Print the value of shrtlnk
-        System.out.println("Value of shrtlnk: " + shrtlnk);
+        //System.out.println("Value of shrtlnk: " + shrtlnk);
         
         m.setText(shrtlnk);
                 
         }
         else{
             super.activate();
+            m.setText("Inserisci link da accorciare:");
         }
-        System.out.println(m.getText());
+        //System.out.println(m.getText());
         return m;
             
     }

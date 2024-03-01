@@ -17,16 +17,19 @@ import modules.ITQuestionModule;
 import modules.ImageModule;
 import modules.IndiceLanguageModule;
 import modules.IndiceMusicModule;
+import modules.IndiceQuiz;
 import modules.IndiceQuoteModule;
 import modules.JokeModule;
 import modules.LyricsModule;
 import modules.Mp3Module;
+import modules.MythQuizModule;
 import modules.NewsModule;
 import modules.QuoteModule;
 import modules.QuoteTrumpModule;
 import modules.RecipeModule;
 import modules.ShortLinkModule;
 import modules.SimilarArtistModule;
+import modules.SportQuizModule;
 import modules.StockModule;
 import modules.TempMailModule;
 import modules.TranslateModule;
@@ -68,7 +71,11 @@ public class Main {
                 new IndiceMusicModule(),
                 new SimilarArtistModule(),
                 new TempMailModule(),
-                new ITQuestionModule()
+                new IndiceQuiz(),
+                new ITQuestionModule(),
+                new MythQuizModule(),
+                new SportQuizModule()
+                
         ));
 
         bot.registerBot(new MultiApiTelegramBot(modules));

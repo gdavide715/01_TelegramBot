@@ -4,26 +4,17 @@
  */
 package modules;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import interfaces.BotModule;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import org.json.JSONArray;
 import org.json.JSONObject;
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 /**
@@ -37,19 +28,19 @@ public class Mp3Module extends BotModule{
     }
 
     @Override
-    public BotApiMethod<Message> handleCommand(Update update) {
-        SendMessage m =  m =  new SendMessage();
-        m.setChatId(update.getMessage().getChatId());
-        this.deactivate();
-        m.setText("fatto");
-        return m;
-    }
-    
-    public static String link (String t) throws MalformedURLException, JsonProcessingException, IOException, InterruptedException{
+    public PartialBotApiMethod<?> handleCommand(Update update) {
+        SendAudio sendAudio = new SendAudio();
+        sendAudio.setChatId(update.getMessage().getChatId().toString());
         String downloadUrl = "";
-        try {
+        String s = update.getMessage().getText();
+        
+        if(s.equalsIgnoreCase("/close")){
+                super.deactivate();
+            }
+        else if(this.isActive()){
+            try {
             // URL della richiesta
-            String urlString = "https://yt-cw.fabdl.com/youtube/get?url=" + t + "&mp3_task=2";
+            String urlString = "https://yt-cw.fabdl.com/youtube/get?url=" + s + "&mp3_task=2";
             URL url = new URL(urlString);
             
             // Apertura della connessione
@@ -111,7 +102,15 @@ public class Mp3Module extends BotModule{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return downloadUrl;
+            sendAudio.setAudio(new InputFile(downloadUrl));
+            
+        }else{
+            
+            
+            //System.out.println(m.getText());
+            super.activate();
+        }
+        return sendAudio;
     }
     
 }

@@ -37,8 +37,8 @@ public class CurrencyModule extends BotModule{
             }
         else if(this.isActive()){
             String target[] = update.getMessage().getText().trim().split(",");
-            String cu1 = target[0].trim(); // Replace with your desired artist
-            String cu2 = target[1].trim(); // Replace with your desired song title
+            String cu1 = target[0].trim().toUpperCase(); 
+            String cu2 = target[1].trim().toUpperCase(); 
 
         
             try {

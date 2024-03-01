@@ -21,11 +21,11 @@ import org.telegram.telegrambots.meta.api.objects.Update;
  *
  * @author taluk
  */
-public class ITQuestionModule extends BotModule{
+public class SportQuizModule extends BotModule{
     String question = "";
     String correctAnswer = "";
-    public ITQuestionModule() {
-        super("/ITQuiz");
+    public SportQuizModule() {
+        super("/SportQuiz");
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ITQuestionModule extends BotModule{
         else{
             try {
                 // Create URL object with the API endpoint
-                URL url = new URL("https://opentdb.com/api.php?amount=1&category=18&type=boolean");
+                URL url = new URL("https://opentdb.com/api.php?amount=1&category=21&difficulty=medium&type=boolean");
 
                 // Open a connection to the URL
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
