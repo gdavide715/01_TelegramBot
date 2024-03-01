@@ -34,12 +34,12 @@ public class WorkoutModule extends BotModule{
         String ex = "";
         SendMessage m = new SendMessage();
         String s = update.getMessage().getText();
+        m.setChatId(update.getMessage().getChatId());
         System.out.println(s);
         if(s.equalsIgnoreCase("/close")){
                 super.deactivate();
             }
         else if(this.isActive()){
-            m.setChatId(update.getMessage().getChatId());
             String target[] = update.getMessage().getText().trim().split(",");
             String muscle = target[0].trim(); // Replace with your desired artist
             String num = target[1].trim(); // Replace with your desired song title

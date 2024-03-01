@@ -7,22 +7,21 @@ public class BotConfiguration {
             /help -> Elenco comandi ℹ️
             /joke -> Racconta una barzelletta 😂
             /weather -> Restituisce il meteo data una città ⛅
-            /traduci -> restituisce la traduzione 🇮🇹 🇫🇷
-            /quote -> messaggio filosofico 📜
-            /quoteTrump -> messaggio Trump 👨
             /cocktail -> random cocktail 🍸
-            /dictionary -> definizione di una parola 🌐
-            /lyrics -> testo di una canzone (artista, canzone) 🎵
+            /quotes -> messaggi filosofici 📜
+            /languageTools -> strumenti linguistici 🌐
+            /music -> strumenti musica 🎵
             /img -> immagine (/img, nome) 📷
-            /recipe -> ricetta e poi il piatto del quale si vuole 👨‍🍳
-            /workout -> esercizi in base al muscolo 💪
+            /recipe -> ricetta 👨‍🍳
+            /workout -> esercizi 💪
             /currency -> cambio valuta 🪙
-            /mp3 -> mp3 🎸
             /goggins -> video motivazionale 🏃‍♂️
             /circolari -> ultime circolari scolastiche 🏫
             /news -> ultime notizie 📰
             /shortLink -> accorciare i link 🔗
             /stock -> stock info 📈
+            /tempMail -> mail temporanea
+            /ITQuiz -> quiz informatica
             """;
 
 }

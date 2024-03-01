@@ -13,7 +13,11 @@ import modules.CocktailModule;
 import modules.CurrencyModule;
 import modules.DavidGogginsModule;
 import modules.DictionaryModule;
+import modules.ITQuestionModule;
 import modules.ImageModule;
+import modules.IndiceLanguageModule;
+import modules.IndiceMusicModule;
+import modules.IndiceQuoteModule;
 import modules.JokeModule;
 import modules.LyricsModule;
 import modules.Mp3Module;
@@ -22,7 +26,9 @@ import modules.QuoteModule;
 import modules.QuoteTrumpModule;
 import modules.RecipeModule;
 import modules.ShortLinkModule;
+import modules.SimilarArtistModule;
 import modules.StockModule;
+import modules.TempMailModule;
 import modules.TranslateModule;
 import modules.WeatherModule;
 import modules.WorkoutModule;
@@ -56,7 +62,13 @@ public class Main {
                 new CircolariModule(),
                 new NewsModule(),
                 new ShortLinkModule(),
-                new StockModule()
+                new StockModule(),
+                new IndiceQuoteModule(),
+                new IndiceLanguageModule(),
+                new IndiceMusicModule(),
+                new SimilarArtistModule(),
+                new TempMailModule(),
+                new ITQuestionModule()
         ));
 
         bot.registerBot(new MultiApiTelegramBot(modules));

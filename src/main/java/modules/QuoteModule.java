@@ -23,7 +23,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class QuoteModule extends BotModule{
 
     public QuoteModule() {
-        super("/quote");
+        super("/normalQuote");
     }
 
     @Override
