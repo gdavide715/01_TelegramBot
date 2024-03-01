@@ -9,11 +9,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import static javax.ws.rs.sse.SseEventSource.target;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -28,7 +35,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 public class TranslateModule extends BotModule{
-
+    String translation = "";
     
     public TranslateModule() {
         super("/traduci");
@@ -57,54 +64,45 @@ public class TranslateModule extends BotModule{
                 String testo = target[2].trim();
         
         
-                String responseString = "";
-        try {
-            // Construct the URL with parameters
-            String urlString = "https://655.mtis.workers.dev/translate?text=" + testo + "&source_lang=" + from + "&target_lang=" + to;
-            URL url = new URL(urlString);
+                // Define the URL
+        String url = "https://api.microsofttranslator.com/V2/Ajax.svc/Translate?appId=DB50E2E9FBE2E92B103E696DCF4E3E512A8826FB&oncomplete=?&text=" + testo.replace(" ", "+") + "&from=" + from + "&to=" + to;
 
-            // Open a connection
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        // Create an HttpClient
+        HttpClient httpClient = HttpClient.newHttpClient();
 
-            // Set the request method
-            connection.setRequestMethod("GET");
+        // Create an HttpRequest
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
 
-            // Get the response code
-            int responseCode = connection.getResponseCode();
+        // Send the request asynchronously
+        CompletableFuture<HttpResponse<String>> responseFuture = httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
 
-            if (responseCode == HttpURLConnection.HTTP_OK) { // If response is successful
-                // Read the response
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
-                StringBuilder response = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
+        // Handle the response asynchronously
+        CompletableFuture<String> translationResult = responseFuture.thenApply(response -> {
+            // Extract and return the translated text
+            if (response.statusCode() == 200) {
+                String responseBody = response.body();
+                // Use regular expression to extract text inside quotes
+                Matcher matcher = Pattern.compile("\"([^\"]*)\"").matcher(responseBody);
+                if (matcher.find()) {
+                    return matcher.group(1); // Extract the text inside quotes
+                } else {
+                    return "Error: Translation not found in response";
                 }
-                reader.close();
-
-                // Print the response
-                System.out.println("API Response: " + response.toString());
-                responseString = response.toString();
             } else {
-                System.out.println("Error: HTTP " + responseCode);
+                return "Error: " + response.statusCode(); // Handle error cases
             }
-            
-            // Parse the JSON response
-            JsonObject jsonResponse = new Gson().fromJson(responseString, JsonObject.class);
+            });
 
-            // Extract the translated_text value
-            String translatedText = jsonResponse.getAsJsonObject("response").get("translated_text").getAsString();
+            // Block and get the translation result
+            translation = translationResult.join();
 
-            // Print the translated text
-            System.out.println("Translated Text: " + translatedText);
-            m.setText(translatedText);
-            // Close the connection
-            connection.disconnect();
+            // Print the translation
+            System.out.println(translation);
+            m.setText(translation);
 
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        }
         else{
             super.activate();
             m.setText("Inserisci: from, to, testo");
