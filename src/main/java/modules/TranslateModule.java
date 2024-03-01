@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import static javax.ws.rs.sse.SseEventSource.target;
+import static kotlin.concurrent.ThreadsKt.thread;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import org.asynchttpclient.AsyncHttpClient;
@@ -77,7 +78,11 @@ public class TranslateModule extends BotModule{
 
         // Send the request asynchronously
         CompletableFuture<HttpResponse<String>> responseFuture = httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
-
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(TranslateModule.class.getName()).log(Level.SEVERE, null, ex);
+            }
         // Handle the response asynchronously
         CompletableFuture<String> translationResult = responseFuture.thenApply(response -> {
             // Extract and return the translated text
@@ -99,7 +104,7 @@ public class TranslateModule extends BotModule{
             translation = translationResult.join();
 
             // Print the translation
-            System.out.println(translation);
+            //System.out.println(translation);
             m.setText(translation);
 
             }

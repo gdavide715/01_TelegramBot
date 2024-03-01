@@ -17,7 +17,7 @@ public class MultiApiTelegramBot extends TelegramLongPollingBot {
     private final ArrayList<BotModule> modules;
 
     public MultiApiTelegramBot(ArrayList<BotModule> modules) {
-        super("6908885694:AAHkxpt2HC3jHPbE1XPcX64Hqh0ACiWxwUo");
+        super("6640826991:AAF4T3HNgD6YRqbNiIa3GqKjk68pInoRxwI");
         this.modules = modules;
     }
 
