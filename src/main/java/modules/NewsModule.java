@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.io.IOException;
 import java.io.InputStream;
+import static java.lang.Integer.parseInt;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
@@ -27,17 +28,34 @@ public class NewsModule extends BotModule {
     public BotApiMethod<Message> handleCommand(Update update) {
         SendMessage response = new SendMessage();
         response.setChatId(update.getMessage().getChatId());
+        String s = update.getMessage().getText();
+        
+        if(s.equalsIgnoreCase("/close")){
+            super.deactivate();
+        }else if(super.isActive()){
+            String target[] = s.split(",");
+        
+            String p = target[0].trim();
+            String c = target[1].trim();
+            int n = parseInt(target[2].trim());
 
-        String news = getTopHeadlines();
+            String news = getTopHeadlines(p, c, n);
+            response.setText("Ecco le ultime notizie:\n\n " + news);
+        }else{
+            response.setText("Inserisci: paese, categoria, numero di articoli");
+            super.activate();
+        }
+        
+        
 
-        response.setText("Ecco le ultime notizie:\n\n " + news);
+        
         return response;
     }
 
-    private String getTopHeadlines() {
-        String country = "it"; // Puoi cambiare il paese a tuo piacimento
-        String category = "general"; // Puoi cambiare la categoria a tuo piacimento
-        int count = 5; // Numero di notizie da ottenere
+    private String getTopHeadlines(String p, String c, int n) {
+        String country = p; // Puoi cambiare il paese a tuo piacimento
+        String category = c; // Puoi cambiare la categoria a tuo piacimento
+        int count = n; // Numero di notizie da ottenere
 
         try {
             URL url = new URL("https://newsapi.org/v2/top-headlines?country=" + country + "&category=" + category + "&pageSize=" + count + "&apiKey=" + NEWS_API_KEY);
