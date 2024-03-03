@@ -39,7 +39,7 @@ public class JokeModule extends BotModule{
                 String body = jsonObject.get("body").getAsString();
                 String title = jsonObject.get("title").getAsString();
                 //System.out.println("Body: " + body);
-                s = title + body;
+                s = title + "\t" + body;
                 
                 
             })

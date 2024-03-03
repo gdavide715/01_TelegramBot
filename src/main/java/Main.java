@@ -8,6 +8,8 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import modules.BibleModule;
+import modules.BroadcastModule;
 import modules.CircolariModule;
 import modules.CocktailModule;
 import modules.CurrencyModule;
@@ -23,6 +25,7 @@ import modules.JokeModule;
 import modules.LyricsModule;
 import modules.Mp3Module;
 import modules.MythQuizModule;
+import modules.NMAPModule;
 import modules.NewsModule;
 import modules.QuoteModule;
 import modules.QuoteTrumpModule;
@@ -74,7 +77,10 @@ public class Main {
                 new IndiceQuiz(),
                 new ITQuestionModule(),
                 new MythQuizModule(),
-                new SportQuizModule()
+                new SportQuizModule(),
+                new BroadcastModule(),
+                new BibleModule(),
+                new NMAPModule()
                 
         ));
 

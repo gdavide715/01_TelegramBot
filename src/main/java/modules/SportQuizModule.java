@@ -40,10 +40,10 @@ public class SportQuizModule extends BotModule{
         
         }else if(this.isActive()){
             if(s.equalsIgnoreCase(correctAnswer)){
-                m.setText("Bravo, esatto");
+                m.setText("Bravo, esatto!\n/SportQuiz -> per riprovare\n/close -> per chiudere");
                 super.deactivate();
             }else if(s != correctAnswer){
-                m.setText("Sbagliato");
+                m.setText("Sbagliato!\n/SportQuiz -> per riprovare\n/close -> per chiudere");
                 super.deactivate();
             }
             

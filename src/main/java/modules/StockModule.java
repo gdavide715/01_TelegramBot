@@ -30,8 +30,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
  * @author taluk
  */
 public class StockModule extends BotModule{
-    String filePath = "stock.txt";
-    File file = new File(filePath);
     static List<String> stock = new ArrayList<String>();
     
     public StockModule() {
@@ -40,6 +38,8 @@ public class StockModule extends BotModule{
 
     @Override
     public BotApiMethod<Message> handleCommand(Update update) {
+        String filePath = update.getMessage().getChatId() + ".txt";
+        File file = new File(filePath);
         SendMessage m = new SendMessage();
         m.setChatId(update.getMessage().getChatId());
         String s = update.getMessage().getText();
@@ -129,13 +129,18 @@ public class StockModule extends BotModule{
                         // Create the new file if it doesn't exist
                         file.createNewFile();
                         System.out.println("File created successfully.");
+                        m.setText("Comandi:\n/add, nomeStock -> per aggiungere lo stock\n/remove, nomeStock -> per togliere lo stock\n/info -> per vedere info \n\n(esempi: https://stockanalysis.com/stocks/)");
+            
                     }else{
                         String g[] = getTextFromFile(file).split(" ");
                         for(int i=0; i<g.length; i++){
                             if(stock.contains(g[i])){
-                                
+                                m.setText("Comandi:\n/add, nomeStock -> per aggiungere lo stock\n/remove, nomeStock -> per togliere lo stock\n/info -> per vedere info \n\n(esempi: https://stockanalysis.com/stocks/)");
+            
                             }else{
                                 stock.add(g[i]);
+                                m.setText("Comandi:\n/add, nomeStock -> per aggiungere lo stock\n/remove, nomeStock -> per togliere lo stock\n/info -> per vedere info \n\n(esempi: https://stockanalysis.com/stocks/)");
+            
                             }
                             
                         }
@@ -146,7 +151,6 @@ public class StockModule extends BotModule{
                     System.out.println("An error occurred: " + e.getMessage());
                     e.printStackTrace();
                 }
-            m.setText("Comandi:\n/add, nomeStock -> per aggiungere lo stock\n/remove, nomeStock -> per togliere lo stock\n/info -> per vedere info \n\n(esempi: https://stockanalysis.com/stocks/)");
             //System.out.println(m.getText());
             super.activate();
         }

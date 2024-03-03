@@ -36,18 +36,18 @@ public class MythQuizModule extends BotModule{
         
         
         if(s.equalsIgnoreCase("/close")){
-                super.deactivate();
+            m.setText("/MythQuiz chiuso");
+            super.deactivate();
         
         }else if(this.isActive()){
             if(s.equalsIgnoreCase(correctAnswer)){
-                m.setText("Bravo, esatto");
+                m.setText("Bravo, esatto\n/MythQuiz -> per riprovare\n/close -> per chiudere");
                 super.deactivate();
             }else if(s != correctAnswer){
-                m.setText("Sbagliato");
+                m.setText("Sbagliato!\n/MythQuiz -> per riprovare\n/close -> per chiudere");
                 super.deactivate();
-            }
-            
-           }
+            } 
+        }
         else{
             try {
                 // Create URL object with the API endpoint

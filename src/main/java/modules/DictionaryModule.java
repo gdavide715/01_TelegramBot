@@ -48,64 +48,14 @@ public class DictionaryModule extends BotModule{
         String s = update.getMessage().getText();
         String y = "";
         
-        if(super.isActive()){
-            s = update.getMessage().getText();
-            String mess[] = s.split(",");
-            String lingua = mess[0].trim();
-            String parola = mess[1].trim();
+        if(s.equalsIgnoreCase("/close")){
+           m.setText("/dictionary chiuso");
+           super.deactivate();                    
+        }else if(this.isActive()){
             
-            if("en".equals(lingua)){
-            } else {
-                String responseString = "";
-                try {
-                    // Construct the URL with parameters
-                    String urlString = "https://655.mtis.workers.dev/translate?text=" + parola + "&source_lang=" + lingua + "&target_lang=en";
-                    URL url = new URL(urlString);
-
-                    // Open a connection
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-                    // Set the request method
-                    connection.setRequestMethod("GET");
-
-                    // Get the response code
-                    int responseCode = connection.getResponseCode();
-
-                    if (responseCode == HttpURLConnection.HTTP_OK) { // If response is successful
-                        // Read the response
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
-                        StringBuilder response = new StringBuilder();
-                        String line;
-                        while ((line = reader.readLine()) != null) {
-                            response.append(line);
-                        }
-                        reader.close();
-
-                        // Print the response
-                        System.out.println("API Response: " + response.toString());
-                        responseString = response.toString();
-                    } else {
-                        System.out.println("Error: HTTP " + responseCode);
-                    }
-
-                    JsonObject jsonResponse = new Gson().fromJson(responseString, JsonObject.class);
-                    String translatedText = jsonResponse.getAsJsonObject("response").get("translated_text").getAsString();
-                    
-                    String[] words = translatedText.split(" ");
-                    if(words.length>1){
-                        String lastWord = words[words.length - 1];
-                        parola = lastWord;
-                    }else{
-                        parola = translatedText;
-                    }
-                    connection.disconnect();
-                } catch (IOException e) {
-                }
-            } //Fine if lingua != en
-
             try {
                 // Encode the search term
-                String encodedParola = URLEncoder.encode(parola, StandardCharsets.UTF_8);
+                String encodedParola = URLEncoder.encode(s, StandardCharsets.UTF_8);
 
                 // Create URL object
                 URL url = new URL("https://api.urbandictionary.com/v0/define?term=" + encodedParola);
@@ -150,8 +100,10 @@ public class DictionaryModule extends BotModule{
                     }
 
                     // Print the definitions
+                    int i = 1;
                     for (String definition : definitions) {
-                        y += definition + " ";
+                        y += i + "\t" + definition + "\n\n";
+                        i++;
                     }
                 } else {
                     // If request is unsuccessful, print the response code
@@ -162,64 +114,10 @@ public class DictionaryModule extends BotModule{
             } catch (JSONException ex) {
                 ex.printStackTrace();
             }
-
-            
-            
-            if(!"en".equals(lingua)){
-                try {
-                    // Construct the URL with parameters
-                    String urlString = "https://655.mtis.workers.dev/translate?text=" + URLEncoder.encode(y.trim(), StandardCharsets.UTF_8) + "&source_lang=en&target_lang=" + URLEncoder.encode(lingua, StandardCharsets.UTF_8);
-                    URL url = new URL(urlString);
-
-                    // Open a connection
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-                    // Set the request method
-                    connection.setRequestMethod("GET");
-
-                    // Get the response code
-                    int responseCode = connection.getResponseCode();
-
-                    if (responseCode == HttpURLConnection.HTTP_OK) { // If response is successful
-                        // Read the response
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
-                        StringBuilder response = new StringBuilder();
-                        String line;
-                        while ((line = reader.readLine()) != null) {
-                            response.append(line);
-                        }
-                        reader.close();
-
-                        // Print the response
-                        System.out.println("API Response: " + response.toString());
-                        String responseString = response.toString();
-
-                        // Parse JSON response
-                        JsonObject jsonResponse = new Gson().fromJson(responseString, JsonObject.class);
-                        String translatedText = jsonResponse.getAsJsonObject("response").get("translated_text").getAsString();
-
-                        y = translatedText;
-                    } else {
-                        // If request is unsuccessful, print the response code
-                        System.out.println("Error: HTTP " + responseCode);
-                    }
-
-                    connection.disconnect();
-                } catch (IOException e) {
-                    e.printStackTrace();
-}
-
-                
-            }
-            
-            m.setText(y);
-            
-            
-        }else if(s.equalsIgnoreCase("/close")){
-            super.deactivate();
+            m.setText(y.replace("[", " ").replace("]", " "));     
         }
         else{
-            m.setText("Inserisci: lingua, parola");
+            m.setText("Inserisci la parola in inglese");
             super.activate();
         }
         

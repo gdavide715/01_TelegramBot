@@ -22,6 +22,8 @@ public class BotConfiguration {
             /stock -> stock info 📈
             /tempMail -> mail temporanea
             /quiz -> quiz informatica
+            /bible -> verso della bibbia
+            /nmap -> ip scanner
             """;
 
 }

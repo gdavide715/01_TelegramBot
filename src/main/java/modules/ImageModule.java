@@ -20,8 +20,13 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONObject;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
@@ -41,12 +46,41 @@ public class ImageModule extends BotModule{
     }
 
     @Override
-    public BotApiMethod<Message> handleCommand(Update update) {
-        SendMessage m =  m =  new SendMessage();
-        m.setChatId(update.getMessage().getChatId());
-        this.deactivate();
-        m.setText("fatto");
-        return m;
+    public PartialBotApiMethod<?> handleCommand(Update update) {
+        SendPhoto sendAudio = new SendPhoto();
+        sendAudio.setChatId(update.getMessage().getChatId().toString());
+        String downloadUrl = "";
+        String s = update.getMessage().getText();
+        SendMessage m = new SendMessage();
+        m.setChatId(update.getMessage().getChatId().toString());
+        
+        if(s.equalsIgnoreCase("/close")){
+                m.setText("/img chiuso");
+                super.deactivate();
+                return m;
+            }
+        else if(this.isActive()){
+            
+            try {
+                sendAudio.setPhoto(new InputFile(link(s)));
+            } catch (JsonProcessingException ex) {
+                Logger.getLogger(ImageModule.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ImageModule.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            return sendAudio;
+            
+        }else{
+            
+            
+            //System.out.println(m.getText());
+            m.setText("Inserisci nome immagine:");
+            super.activate();
+            return m;
+            
+            
+        }
     }
     
     public static String link (String t) throws MalformedURLException, JsonProcessingException, IOException{

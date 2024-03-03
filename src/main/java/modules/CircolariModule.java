@@ -69,14 +69,14 @@ public class CircolariModule extends BotModule {
 
                     // Selezioniamo l'elemento che contiene il link al PDF
                     Element pdfLinkElement = d.selectFirst("div.card-body a[href$=.pdf]");
-                    System.out.println("pdfLinkElement: " + pdfLinkElement);
+                    //System.out.println("pdfLinkElement: " + pdfLinkElement);
 
                     if (pdfLinkElement != null) {
 
                         // Estraiamo l'URL dal link
                         String pdfUrl = pdfLinkElement.attr("href");
 
-                        System.out.println("pdfUrl: " + pdfUrl);
+                        //System.out.println("pdfUrl: " + pdfUrl);
                         response += "\nPDF: " + pdfUrl + "\n\n";
 
                     }else{

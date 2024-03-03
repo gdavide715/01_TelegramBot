@@ -70,6 +70,7 @@ public class CocktailModule extends BotModule{
                 // Extract strDrink value from the first item in the array
                 JSONObject firstDrink = drinksArray.getJSONObject(0);
                 String strDrink = firstDrink.getString("strDrink");
+                String img = firstDrink.getString("strDrinkThumb");
                 int a = 1;
                 ArrayList<String> ing = new ArrayList<>();
                 for (int i = 0; i < 15; i++) {
@@ -79,9 +80,12 @@ public class CocktailModule extends BotModule{
                     }
                     a++;
                 }
+                String ingredients = ing.toString();
+                ingredients = ingredients.replaceAll("^\\[|\\]$", "");
+                
                 
                 // Print the strDrink value
-                m.setText("Random Cocktail: " + strDrink + "\nIngridients: " + ing.toString());
+                m.setText("Random Cocktail: " + strDrink + "\nIngridients: " + ingredients + "\n\n" + img);
             } else {
                 // If request is unsuccessful, print the response code
                 System.out.println("GET request not successful. Response code: " + responseCode);

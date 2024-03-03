@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 public class DavidGogginsModule extends BotModule {
@@ -23,7 +24,7 @@ public class DavidGogginsModule extends BotModule {
     }
 
     @Override
-    public BotApiMethod<Message> handleCommand(Update update) {
+    public PartialBotApiMethod<?> handleCommand(Update update) {
         SendMessage m = new SendMessage();
         m.setChatId(update.getMessage().getChatId());
 
