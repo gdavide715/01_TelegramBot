@@ -81,6 +81,23 @@ public class StockModule extends BotModule{
             
             if(s.equalsIgnoreCase("/info")){
                 String info = "";
+                stock.clear();
+                
+                try {
+                    String g[] = getTextFromFile(file).split(" ");
+                    for(int i=0; i<g.length; i++){
+                            if(stock.contains(g[i])){
+                                
+                            }else{
+                                stock.add(g[i]);
+                                
+                            }
+                            
+                        }
+                } catch (IOException ex) {
+                    Logger.getLogger(StockModule.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
                 for(int i=0; i<stock.size(); i++){
                     try {
                         // Create URL
