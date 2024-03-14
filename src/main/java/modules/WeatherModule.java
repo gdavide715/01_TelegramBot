@@ -51,7 +51,8 @@ public class WeatherModule extends BotModule {
                 awaitingForecast = false;
                 awaitingCity = true;
                 m.setText("Inserisci il nome della città per ottenere il meteo attuale.");
-            } else {
+            } 
+            else {
                 if (awaitingForecast) {
                     lastLocation = messageText;
                     String forecastResponse = getWeatherForecast(messageText);

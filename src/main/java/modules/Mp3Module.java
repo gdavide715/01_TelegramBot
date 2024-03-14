@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -33,8 +34,11 @@ public class Mp3Module extends BotModule{
         sendAudio.setChatId(update.getMessage().getChatId().toString());
         String downloadUrl = "";
         String s = update.getMessage().getText();
+        SendMessage m = new SendMessage();
+        m.setChatId(update.getMessage().getChatId().toString());
         
         if(s.equalsIgnoreCase("/close")){
+                m.setText("/mp3 chiuso");
                 super.deactivate();
             }
         else if(this.isActive()){

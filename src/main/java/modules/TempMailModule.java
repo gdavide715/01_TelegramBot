@@ -53,6 +53,7 @@ public class TempMailModule extends BotModule{
         String MAIL_KEY = "c0127c245309a49d9bace480973cbf7c4b3e51374d4ae21212daf4beb7252f3d";
         String s = update.getMessage().getText();
             if(s.equalsIgnoreCase("/close")){
+                m.setText("/tempMail chiuso");
                 super.deactivate();
             }
             else if(this.isActive()){
@@ -90,7 +91,7 @@ public class TempMailModule extends BotModule{
             }
         }else{
 
-            m.setText("Inserisci comando:\n/create -> creare mail\n/emails -> get inbox");
+            m.setText("Inserisci comando:\n/create -> creare mail\n/emails -> get inbox\n/close -> per chiudere");
             //System.out.println(m.getText());
             super.activate();
         }

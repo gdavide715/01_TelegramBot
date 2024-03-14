@@ -95,7 +95,7 @@ public class CurrencyModule extends BotModule{
                 m.setText("Inserisci 2 valute!");
             }   
         }else{
-            m.setText("Inserisci valute interessate (2):" + "\n\n(esempi qui: https://freecurrencyapi.com/docs/currency-list)" );
+            m.setText("Inserisci valute interessate (2)/close -> per chiudere:" + "\n\n(esempi qui: https://freecurrencyapi.com/docs/currency-list)" );
             super.activate();
         }
         return m;

@@ -29,6 +29,7 @@ public class CircolariModule extends BotModule {
         String s = update.getMessage().getText();
         
         if(s.equalsIgnoreCase("/close")){
+            m.setText("/circolari chiuso");
             super.deactivate();
         }else if(super.isActive()){
             int num = parseInt(update.getMessage().getText());
@@ -92,7 +93,7 @@ public class CircolariModule extends BotModule {
         }
         }else{
             super.activate();
-            m.setText("Inserisci numero di circolari:");
+            m.setText("Inserisci numero di circolari (/close -> per chiudere):");
         }
             
         

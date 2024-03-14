@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class MultiApiTelegramBot extends TelegramLongPollingBot {
 
-    private final String BOT_USERNAME = "@SacconeChallengeBot";
+    private final String BOT_USERNAME = "@ChallengeSacconeBot";
     private final ArrayList<BotModule> modules;
 
     public MultiApiTelegramBot(ArrayList<BotModule> modules) {

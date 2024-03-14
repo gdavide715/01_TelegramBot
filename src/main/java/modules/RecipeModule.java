@@ -51,6 +51,7 @@ public class RecipeModule extends BotModule{
         m.setChatId(update.getMessage().getChatId());
         String s = update.getMessage().getText();
         if(s.equalsIgnoreCase("/close")){
+                m.setText("/recipe chiuso");
                 super.deactivate();
             }
         else if(this.isActive()){
@@ -99,7 +100,6 @@ public class RecipeModule extends BotModule{
             AsyncHttpClient client = new DefaultAsyncHttpClient();
             
             String testo = strInstructions;
-            System.out.println(testo);
             
             
             
@@ -116,7 +116,7 @@ public class RecipeModule extends BotModule{
         }   
         }else{
             
-            m.setText("Inserisci piatto");
+            m.setText("Inserisci piatto (/close ->  per chiudere): ");
             //System.out.println(m.getText());
             super.activate();
         }
@@ -166,7 +166,6 @@ public class RecipeModule extends BotModule{
 
             // Block and get the translation result
             s = translationResult.join();
-            System.out.println(s);
             
         
         return s;

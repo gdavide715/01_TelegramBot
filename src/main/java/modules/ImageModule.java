@@ -75,7 +75,7 @@ public class ImageModule extends BotModule{
             
             
             //System.out.println(m.getText());
-            m.setText("Inserisci nome immagine:");
+            m.setText("Inserisci nome immagine (/close -> per chiudere):");
             super.activate();
             return m;
             

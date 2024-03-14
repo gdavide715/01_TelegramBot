@@ -24,7 +24,7 @@ public class IndiceLanguageModule extends BotModule{
     public BotApiMethod<Message> handleCommand(Update update) {
         SendMessage m = new SendMessage();
         m.setChatId(update.getMessage().getChatId());
-        m.setText("/dictionary -> dizionario multilingua 🌐\n/traduci -> traduttore 🇮🇹 🇫🇷");
+        m.setText("/dictionary -> dizionario multilingua 🌐\n/traduci -> traduttore 🇮🇹 🇫🇷\n/close -> per chiudere");
         this.deactivate();
         return m;
     }

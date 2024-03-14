@@ -35,7 +35,6 @@ public class WorkoutModule extends BotModule{
         SendMessage m = new SendMessage();
         String s = update.getMessage().getText();
         m.setChatId(update.getMessage().getChatId());
-        System.out.println(s);
         if(s.equalsIgnoreCase("/close")){
                 super.deactivate();
             }
@@ -92,7 +91,7 @@ public class WorkoutModule extends BotModule{
         
             
         }else{
-            m.setText("Inserisci muscolo e numero di esercizi (max 5)");
+            m.setText("Inserisci muscolo (in inglese) e numero di esercizi (max 5) (/close -> per chiudere): ");
             super.activate();
         }
         

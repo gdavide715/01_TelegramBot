@@ -45,6 +45,7 @@ public class StockModule extends BotModule{
         String s = update.getMessage().getText();
         System.out.println(s);
         if(s.equalsIgnoreCase("/close")){
+                m.setText("/stock chiuso");
                 super.deactivate();
             }
         else if(this.isActive()){
@@ -156,7 +157,7 @@ public class StockModule extends BotModule{
             
                             }else{
                                 stock.add(g[i]);
-                                m.setText("Comandi:\n/add, nomeStock -> per aggiungere lo stock\n/remove, nomeStock -> per togliere lo stock\n/info -> per vedere info \n\n(esempi: https://stockanalysis.com/stocks/)");
+                                m.setText("Comandi:\n/add, nomeStock -> per aggiungere lo stock\n/remove, nomeStock -> per togliere lo stock\n/info -> per vedere info\n/close -> per chiudere \n\n(esempi: https://stockanalysis.com/stocks/)");
             
                             }
                             

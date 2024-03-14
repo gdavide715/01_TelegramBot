@@ -103,7 +103,7 @@ public class NMAPModule extends BotModule{
             
             
             //System.out.println(m.getText());
-            m.setText("Inserisci IP da scannare:");
+            m.setText("Inserisci IP da scannare (/close -> per chiudere):");
             super.activate();
             
             

@@ -41,6 +41,7 @@ public class SimilarArtistModule extends BotModule{
         String s = update.getMessage().getText();
         System.out.println(s);
         if(s.equalsIgnoreCase("/close")){
+            m.setText("/similiarArtist chiuso");
                 super.deactivate();
             }
         else if(this.isActive()){

@@ -31,18 +31,18 @@ public class NewsModule extends BotModule {
         String s = update.getMessage().getText();
         
         if(s.equalsIgnoreCase("/close")){
+            response.setText("/news chiuso");
             super.deactivate();
         }else if(super.isActive()){
             String target[] = s.split(",");
         
-            String p = target[0].trim();
-            String c = target[1].trim();
-            int n = parseInt(target[2].trim());
+            String c = target[0].trim();
+            int n = parseInt(target[1].trim());
 
-            String news = getTopHeadlines(p, c, n);
+            String news = getTopHeadlines(c, n);
             response.setText("Ecco le ultime notizie:\n\n " + news);
         }else{
-            response.setText("Inserisci: paese, categoria, numero di articoli");
+            response.setText("Inserisci: categoria (per esempi: https://newsapi.org/docs/endpoints/top-headlines), numero di articoli (/close -> per chiudere): ");
             super.activate();
         }
         
@@ -52,13 +52,12 @@ public class NewsModule extends BotModule {
         return response;
     }
 
-    private String getTopHeadlines(String p, String c, int n) {
-        String country = p; // Puoi cambiare il paese a tuo piacimento
+    private String getTopHeadlines(String c, int n) {
         String category = c; // Puoi cambiare la categoria a tuo piacimento
         int count = n; // Numero di notizie da ottenere
 
         try {
-            URL url = new URL("https://newsapi.org/v2/top-headlines?country=" + country + "&category=" + category + "&pageSize=" + count + "&apiKey=" + NEWS_API_KEY);
+            URL url = new URL("https://newsapi.org/v2/top-headlines?country=it&category=" + category + "&pageSize=" + count + "&apiKey=" + NEWS_API_KEY);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();

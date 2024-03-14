@@ -117,7 +117,7 @@ public class DictionaryModule extends BotModule{
             m.setText(y.replace("[", " ").replace("]", " "));     
         }
         else{
-            m.setText("Inserisci la parola in inglese");
+            m.setText("Inserisci la parola in inglese (/close per chiusere)");
             super.activate();
         }
         

@@ -39,6 +39,7 @@ public class LyricsModule extends BotModule{
         
         System.out.println(s);
         if(s.equalsIgnoreCase("/close")){
+            m.setText("/lirycs chiuso");
                 super.deactivate();
             }
         else if(this.isActive()){

@@ -11,7 +11,7 @@ public class BotConfiguration {
             /quotes -> messaggi filosofici 📜
             /languageTools -> strumenti linguistici 🌐
             /music -> strumenti musica 🎵
-            /img -> immagine (/img, nome) 📷
+            /img -> immagine 📷
             /recipe -> ricetta 👨‍🍳
             /workout -> esercizi 💪
             /currency -> cambio valuta 🪙

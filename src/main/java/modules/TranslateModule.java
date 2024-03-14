@@ -53,6 +53,7 @@ public class TranslateModule extends BotModule{
         System.out.println(s);
             
         if(s.equalsIgnoreCase("/close")){
+                m.setText("/traduci chiuso");
                 super.deactivate();
         
         }else if(this.isActive()){
@@ -110,7 +111,7 @@ public class TranslateModule extends BotModule{
             }
         else{
             super.activate();
-            m.setText("Inserisci: from, to, testo");
+            m.setText("Inserisci: lingua della frase da tradure, lingua frase tradotta, testo\nLingue disponibili: ");
         }
         System.out.println(m.getText());
         

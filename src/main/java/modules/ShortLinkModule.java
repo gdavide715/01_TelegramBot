@@ -45,6 +45,7 @@ public class ShortLinkModule extends BotModule{
         System.out.println(s);
             
         if(s.equalsIgnoreCase("/close")){
+                m.setText("/shortLink chiuso");
                 super.deactivate();
         
         }else if(this.isActive()){
@@ -118,7 +119,7 @@ public class ShortLinkModule extends BotModule{
         }
         else{
             super.activate();
-            m.setText("Inserisci link da accorciare:");
+            m.setText("Inserisci link da accorciare (/close -> per chiudere):");
         }
         //System.out.println(m.getText());
         return m;
