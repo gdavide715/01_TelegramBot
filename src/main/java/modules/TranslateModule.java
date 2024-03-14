@@ -111,7 +111,54 @@ public class TranslateModule extends BotModule{
             }
         else{
             super.activate();
-            m.setText("Inserisci: lingua della frase da tradure, lingua frase tradotta, testo\nLingue disponibili: ");
+            String list = "\n- Af\n" +
+        "- Ar\n" +
+        "- Bg\n" +
+        "- Ca\n" +
+        "- Zh-yue\n" +
+        "- Zh\n" +
+        "- Zh-TW\n" +
+        "- Hr\n" +
+        "- Cs\n" +
+        "- Da\n" +
+        "- Nl\n" +
+        "- En\n" +
+        "- Et\n" +
+        "- Fil\n" +
+        "- Fi\n" +
+        "- Fr\n" +
+        "- De\n" +
+        "- El\n" +
+        "- He\n" +
+        "- Hi\n" +
+        "- Hu\n" +
+        "- Is\n" +
+        "- It\n" +
+        "- Ja\n" +
+        "- Ko\n" +
+        "- Lv\n" +
+        "- Lt\n" +
+        "- Ms\n" +
+        "- Mt\n" +
+        "- No\n" +
+        "- Fa\n" +
+        "- Pl\n" +
+        "- Pt\n" +
+        "- Ro\n" +
+        "- Ru\n" +
+        "- Sr\n" +
+        "- Sk\n" +
+        "- Sl\n" +
+        "- Es\n" +
+        "- Sw\n" +
+        "- Sv\n" +
+        "- Th\n" +
+        "- Tr\n" +
+        "- Uk\n" +
+        "- Vi\n" +
+        "- Cy\n";
+
+            m.setText("Inserisci: lingua della frase da tradure, lingua frase tradotta, testo\nLingue disponibili: " + list);
         }
         System.out.println(m.getText());
         

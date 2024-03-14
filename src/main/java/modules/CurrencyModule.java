@@ -95,7 +95,9 @@ public class CurrencyModule extends BotModule{
                 m.setText("Inserisci 2 valute!");
             }   
         }else{
-            m.setText("Inserisci valute interessate (2)/close -> per chiudere:" + "\n\n(esempi qui: https://freecurrencyapi.com/docs/currency-list)" );
+            String currencyAbbreviations = "\n-EUR\n-USD\n-JPY\n-BGN\n-CZK\n-DKK\n-GBP\n-HUF\n-PLN\n-RON\n-SEK\n-CHF\n-ISK\n-NOK\n-HRK\n-RUB\n-TRY\n-AUD\n-BRL\n-CAD\n-CNY\n-HKD\n-IDR\n-ILS\n-INR\n-KRW\n-MXN\n-MYR\n-NZD\n-PHP\n-SGD\n-THB\n-ZAR\n";
+
+            m.setText("Inserisci valute interessate (2)\n/close -> per chiudere:" + "\n\nesempi: " + currencyAbbreviations );
             super.activate();
         }
         return m;

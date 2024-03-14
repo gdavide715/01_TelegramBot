@@ -42,7 +42,9 @@ public class NewsModule extends BotModule {
             String news = getTopHeadlines(c, n);
             response.setText("Ecco le ultime notizie:\n\n " + news);
         }else{
-            response.setText("Inserisci: categoria (per esempi: https://newsapi.org/docs/endpoints/top-headlines), numero di articoli (/close -> per chiudere): ");
+            String categories = "-business\n-entertainment\n-general\n-health\n-sciences\n-sports\n-technology\n";
+
+            response.setText("Inserisci: categoria , numero di articoli \n\nPer esempio:\n" + categories + "\n(/close -> per chiudere) ");
             super.activate();
         }
         

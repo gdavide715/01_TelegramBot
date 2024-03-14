@@ -24,7 +24,7 @@ public class IndiceMusicModule extends BotModule{
     public BotApiMethod<Message> handleCommand(Update update) {
         SendMessage m = new SendMessage();
         m.setChatId(update.getMessage().getChatId());
-        m.setText("/mp3 -> inserire link per mp3 (/mp3, link) 🎸\n/lyrics -> testo canzone 🎵\n/similarArtist -> artisti simili 🧑‍🎤\n /close ->per chiudere");
+        m.setText("/mp3 -> inserire link per mp3 🎸\n/lyrics -> testo canzone 🎵\n/similarArtist -> artisti simili 🧑‍🎤\n/close ->per chiudere");
         this.deactivate();
         return m;
     }
