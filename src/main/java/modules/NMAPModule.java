@@ -53,16 +53,15 @@ public class NMAPModule extends BotModule{
             String res = "";
             
             try {
-            // Constructing the URL
             String baseUrl = "https://api.viewdns.info/portscan/?";
             String queryParams = String.format("host=%s&apikey=%s&output=%s", host, apiKey, outputType);
             URL url = new URL(baseUrl + queryParams);
             
-            // Creating HTTP connection
+            
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
-            // Reading the response
+            
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String inputLine;
             StringBuilder response = new StringBuilder();
@@ -72,16 +71,16 @@ public class NMAPModule extends BotModule{
             }
             in.close();
 
-            // Printing the response
+            
             System.out.println("Response: " + response.toString());
              String jsonResponse = "{\"query\" : {\"tool\" : \"portscan_PRO\",\"host\" : \"8.8.8.8\"},\"response\" : {\"port\" : [{\"number\" : \"21\", \"service\" : \"FTP\", \"status\" : \"closed\"},{\"number\" : \"22\", \"service\" : \"SSH\", \"status\" : \"closed\"},{\"number\" : \"23\", \"service\" : \"Telnet\", \"status\" : \"closed\"},{\"number\" : \"25\", \"service\" : \"SMTP\", \"status\" : \"closed\"},{\"number\" : \"53\", \"service\" : \"DNS\", \"status\" : \"open\"},{\"number\" : \"80\", \"service\" : \"HTTP\", \"status\" : \"closed\"},{\"number\" : \"110\", \"service\" : \"POP3\", \"status\" : \"closed\"},{\"number\" : \"139\", \"service\" : \"NETBIOS\", \"status\" : \"closed\"},{\"number\" : \"143\", \"service\" : \"IMAP\", \"status\" : \"closed\"},{\"number\" : \"443\", \"service\" : \"HTTPS\", \"status\" : \"open\"},{\"number\" : \"445\", \"service\" : \"SMB\", \"status\" : \"closed\"},{\"number\" : \"1433\", \"service\" : \"MSSQL\", \"status\" : \"closed\"},{\"number\" : \"1521\", \"service\" : \"ORACLE\", \"status\" : \"closed\"},{\"number\" : \"3306\", \"service\" : \"MySQL\", \"status\" : \"closed\"},{\"number\" : \"3389\", \"service\" : \"Remote Desktop\", \"status\" : \"closed\"}]}}";
 
-            // Parse JSON response
+            // Prendo le porte
             JsonObject jsonObject = new Gson().fromJson(jsonResponse, JsonObject.class);
             JsonObject response2 = jsonObject.getAsJsonObject("response");
             JsonArray ports = response2.getAsJsonArray("port");
 
-            // Iterate through ports and print service and status
+            // Prendo il nome del servizio attivo e lo stato
             for (JsonElement port : ports) {
                 JsonObject portObject = port.getAsJsonObject();
                 String service = portObject.get("service").getAsString();

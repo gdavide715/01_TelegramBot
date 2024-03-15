@@ -41,10 +41,8 @@ public class QuoteModule extends BotModule{
             conn.setRequestMethod("GET");
             conn.connect();
 
-            //Check if connect is made
             int responseCode = conn.getResponseCode();
 
-            // 200 OK
             if (responseCode != 200) {
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
             } else {
@@ -61,11 +59,9 @@ public class QuoteModule extends BotModule{
                 //System.out.println(informationString);
 
 
-                //JSON simple library Setup with Maven is used to convert strings to JSON
                 JSONParser parse = new JSONParser();
                 org.json.simple.JSONArray dataObject = (org.json.simple.JSONArray) parse.parse(String.valueOf(informationString));
 
-                //Get the first JSON object in the JSON array
                 //System.out.println(dataObject.get(0));
 
                 org.json.simple.JSONObject quote = (org.json.simple.JSONObject) dataObject.get(0);

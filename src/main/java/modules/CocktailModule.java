@@ -33,41 +33,40 @@ public class CocktailModule extends BotModule{
         SendMessage m = new SendMessage();
         m.setChatId(update.getMessage().getChatId());
         try {
-            // Create URL object
+            // Crea oggetto url contenente l'API endpoint
             URL url = new URL("https://www.thecocktaildb.com/api/json/v1/1/random.php");
 
-            // Create connection object
+            // Apri connessione
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-            // Set request method
             connection.setRequestMethod("GET");
 
-            // Set timeout
+            // Imposta timeout
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
 
-            // Send GET request
+            // Prendi codice risposta
             int responseCode = connection.getResponseCode();
 
-            // Check if the response code is successful
+            // Controlla se va tutto bene (200)
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                // Read response body
+                // Buffered Reader per leggere la risposta
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String inputLine;
                 StringBuilder response = new StringBuilder();
 
+                // aggiungo allo stringBuilder il testo trovato nel bufferedReader
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
 
-                // Close BufferedReader
+                // Chiudo BufferedReader
                 in.close();
 
-                // Parse JSON response
+                // Creo JSONObject
                 JSONObject jsonObject = new JSONObject(response.toString());
                 JSONArray drinksArray = jsonObject.getJSONArray("drinks");
 
-                // Extract strDrink value from the first item in the array
+                // Estraggo valore di strDrink
                 JSONObject firstDrink = drinksArray.getJSONObject(0);
                 String strDrink = firstDrink.getString("strDrink");
                 String img = firstDrink.getString("strDrinkThumb");
@@ -84,10 +83,10 @@ public class CocktailModule extends BotModule{
                 ingredients = ingredients.replaceAll("^\\[|\\]$", "");
                 
                 
-                // Print the strDrink value
+                // Setto al messaggio
                 m.setText("Random Cocktail: " + strDrink + "\nIngridients: " + ingredients + "\n\n" + img);
             } else {
-                // If request is unsuccessful, print the response code
+                // Se richiesta non è stata successfull allora stampa codice
                 System.out.println("GET request not successful. Response code: " + responseCode);
             }
 

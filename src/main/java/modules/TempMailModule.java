@@ -58,7 +58,6 @@ public class TempMailModule extends BotModule{
             }
             else if(this.isActive()){
                 try {
-                // create a MailSlurp client with your API_KEY
                 ApiClient defaultClient = Configuration.getDefaultApiClient();
                 defaultClient.setApiKey(MAIL_KEY);
                 InboxControllerApi inboxControllerApi = new InboxControllerApi(defaultClient);

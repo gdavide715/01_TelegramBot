@@ -122,7 +122,7 @@ public class WeatherModule extends BotModule {
                 JSONObject weather = weatherArray.getJSONObject(0);
                 String description = weather.getString("description");
 
-                // Convert timestamp to readable date
+                // Convert tempo in data leggibile
                 String dateString = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date(timestamp * 1000));
 
                 forecastText.append("Data: ").append(dateString).append("\n");

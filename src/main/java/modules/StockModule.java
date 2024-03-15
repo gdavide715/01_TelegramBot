@@ -101,18 +101,17 @@ public class StockModule extends BotModule{
                 
                 for(int i=0; i<stock.size(); i++){
                     try {
-                        // Create URL
                         URL url = new URL("https://finnhub.io/api/v1/quote?symbol=" + stock.get(i).trim() + "&token=cnf4r8pr01qi6ftoagagcnf4r8pr01qi6ftoagb0");
                         System.out.println(stock.get(i).trim());
-                        // Create connection
+                        
                         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                         connection.setRequestMethod("GET");
 
-                        // Get response
+                        
                         int responseCode = connection.getResponseCode();
                         System.out.println("Response Code: " + responseCode);
 
-                        // Read response
+                        
                         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                         String inputLine;
                         StringBuilder response = new StringBuilder();
@@ -121,12 +120,10 @@ public class StockModule extends BotModule{
                         }
                         in.close();
 
-                        // Remove curly braces and format JSON
                         String formattedResponse = response.toString()
                                 .replaceAll("[{}]", "") // Remove curly braces
                                 .replaceAll(",", ",\n"); // Add newline after commas
 
-                        // Print formatted response
                         info += stock.get(i).trim() + "\n" + formattedResponse + "\n\n";
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -140,11 +137,8 @@ public class StockModule extends BotModule{
                 
             }
         }else{
-            // Specify the file path
                 try {
-                    // Check if the file already exists
                     if (!file.exists()) {
-                        // Create the new file if it doesn't exist
                         file.createNewFile();
                         System.out.println("File created successfully.");
                         m.setText("Comandi:\n/add, nomeStock -> per aggiungere lo stock\n/remove, nomeStock -> per togliere lo stock\n/info -> per vedere info \n\n(esempi: https://stockanalysis.com/stocks/)");

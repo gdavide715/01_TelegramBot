@@ -50,35 +50,29 @@ public class MythQuizModule extends BotModule{
         }
         else{
             try {
-                // Create URL object with the API endpoint
                 URL url = new URL("https://opentdb.com/api.php?amount=1&category=20&difficulty=easy&type=boolean");
 
-                // Open a connection to the URL
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-                // Set request method
                 connection.setRequestMethod("GET");
 
-                // Get the response code
                 int responseCode = connection.getResponseCode();
 
-                // If the response code is successful (200)
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    // Create BufferedReader to read the response
                     BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     String inputLine;
                     StringBuilder response = new StringBuilder();
 
-                    // Read response line by line
+                    
                     while ((inputLine = in.readLine()) != null) {
                         response.append(inputLine);
                     }
                     in.close();
 
-                    // Parse JSON response
+                    
                     JsonObject jsonObject = JsonParser.parseString(response.toString()).getAsJsonObject();
 
-                    // Extract question and correct_answer
+                 
                     question = jsonObject.getAsJsonArray("results")
                                                   .get(0).getAsJsonObject()
                                                   .get("question").getAsString();
@@ -86,12 +80,11 @@ public class MythQuizModule extends BotModule{
                                                         .get(0).getAsJsonObject()
                                                         .get("correct_answer").getAsString();
 
-                    // Print the extracted values
+                    
                     //System.out.println("Question: " + question);
                     //System.out.println("Correct Answer: " + correctAnswer);
                 } else {
-                    // If response code is not 200, print the error
-                    //System.out.println("API call failed with response code: " + responseCode);
+                    
                 }
             } catch (IOException e) {
                 e.printStackTrace();

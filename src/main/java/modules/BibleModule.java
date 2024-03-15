@@ -36,43 +36,44 @@ public class BibleModule extends BotModule{
         m.setChatId(update.getMessage().getChatId());
         String jsonString = "";
         try {
-            // Create the URL object with the API endpoint
+            // Crea oggetto url contenente l'API endpoint
             URL url = new URL("https://bible-api.com/?random=verse");
 
-            // Open a connection to the URL
+            // Apri connessione
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
-            // Get the response code
+            // Prendi codice risposta
             int responseCode = connection.getResponseCode();
 
-            // Check if the request was successful (response code 200)
+            // Controlla se va tutto bene (200)
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                // Create a BufferedReader to read the response
+                // Buffered Reader per leggere la risposta
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder response = new StringBuilder();
                 String line;
                 
-                // Read the response line by line and append it to the StringBuilder
+                // aggiungo allo stringBuilder il testo trovato nel bufferedReader
                 while ((line = reader.readLine()) != null) {
                     response.append(line);
                 }
                 
-                // Close the BufferedReader
+                // Chiudo
                 reader.close();
                 
-                // Print the response
+                // Metto risposta in jsonString
                 jsonString = response.toString();
             } else {
                 System.out.println("Failed to fetch data. Response code: " + responseCode);
             }
             
+            // Creo JSONObject
             JSONObject jsonObject = new JSONObject(jsonString);
 
-            // Extract the value of "reference"
+            // Estraggo valori di "reference"
             String reference = jsonObject.getString("reference");
 
-            // Extract the values of "text"
+            // Estraggo il valore del testo
             List<String> texts = new ArrayList<>();
             JSONArray versesArray = jsonObject.getJSONArray("verses");
             for (int i = 0; i < versesArray.length(); i++) {
@@ -81,11 +82,11 @@ public class BibleModule extends BotModule{
                 texts.add(text);
             }
 
-            // Combine the reference and text values into a Map
+            // Metto assieme l'estrazione del campo reference e testo
             Map<String, List<String>> result = new HashMap<>();
             result.put(reference, texts);
 
-            // Print the combined result
+            
             for (Map.Entry<String, List<String>> entry : result.entrySet()) {
                 String ref = entry.getKey();
                 List<String> verseTexts = entry.getValue();
@@ -95,12 +96,16 @@ public class BibleModule extends BotModule{
                     verse += "- " + text;
                 }
             }
+            
+            // Lo setto sul messaggio 
             m.setText(verse);
-            // Disconnect the connection
+            // Disconnetto la connessione
             connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        // Ritorno
         return m;
     }
     

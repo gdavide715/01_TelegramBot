@@ -67,13 +67,11 @@ public class LyricsModule extends BotModule{
                 
                 JSONObject jsonObject = new JSONObject(jsonString);
 
-                // Get the lyrics from the JSON object
                 String lyrics = jsonObject.getString("lyrics");
 
-                // Find the index of the substring "Dean, what's poppin'?"
                 int startIndex = lyrics.indexOf("]");
                 if (startIndex != -1) {
-                    // Extract the substring from the index of the occurrence of "Dean, what's poppin'?" till the end of the lyrics
+                    
                     String relevantLyrics = lyrics.substring(startIndex+1);
                     //System.out.println(relevantLyrics);
                     m.setText(relevantLyrics);

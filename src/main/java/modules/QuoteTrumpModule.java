@@ -31,19 +31,15 @@ public class QuoteTrumpModule extends BotModule{
         SendMessage m = new SendMessage();
         m.setChatId(update.getMessage().getChatId());
         try {
-            // Create a URL object with the API endpoint
             URL url = new URL("https://www.tronalddump.io/random/quote");
 
-            // Open a connection to the URL
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 
-            // Check if the connection was successful (response code 200)
             if (conn.getResponseCode() != 200) {
                 throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
             }
 
-            // Read the JSON response into a string
             Scanner scanner = new Scanner(url.openStream());
             StringBuilder jsonStringBuilder = new StringBuilder();
             while (scanner.hasNext()) {
@@ -51,14 +47,11 @@ public class QuoteTrumpModule extends BotModule{
             }
             scanner.close();
 
-            // Parse the JSON string into a JSONObject
             JSONObject jsonObject = new JSONObject(new JSONTokener(jsonStringBuilder.toString()));
 
-            // Extract the value of the "value" field
             String value = jsonObject.getString("value");
             
             
-            // Extract the value of the "url" field
             String urlValue = jsonObject.getJSONObject("_embedded")
                                              .getJSONArray("source")
                                              .getJSONObject(0)

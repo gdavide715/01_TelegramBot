@@ -24,7 +24,7 @@ public class IndiceQuoteModule extends BotModule{
     public BotApiMethod<Message> handleCommand(Update update) {
         SendMessage m = new SendMessage();
         m.setChatId(update.getMessage().getChatId());
-        m.setText("/normalQuote -> messaggio filosofico\n/quoteTrump -> messaggio filosofico di Donuld Trump");
+        m.setText("/normalQuote -> messaggio filosofico\n/quoteTrump -> messaggio filosofico di Donald Trump");
         this.deactivate();
         return m;
     }

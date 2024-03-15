@@ -45,7 +45,7 @@ public class CurrencyModule extends BotModule{
                 String cu1 = target[0].trim().toUpperCase(); 
                 String cu2 = target[1].trim().toUpperCase();
                 try {
-                    // Construct URL
+                    // Crea oggetto url contenente l'API endpoint
                     String baseUrl = "https://api.freecurrencyapi.com/v1/latest";
                     String apiKey = "fca_live_b3yEDdoV7EiCsIJuwM0pD0DcoKGnqlK9eVyYmilo";
                     String baseCurrency = "EUR";
@@ -58,13 +58,11 @@ public class CurrencyModule extends BotModule{
 
                     URL url = new URL(urlString);
 
-                    // Open connection
+                    // Apri connessione
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-                    // Set request method
                     connection.setRequestMethod("GET");
 
-                    // Get response
+                    // Prendi codice risposta
                     BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     String inputLine;
                     StringBuffer response = new StringBuffer();
@@ -79,12 +77,12 @@ public class CurrencyModule extends BotModule{
                     String jsonString = response.toString();
                     String result = jsonString.substring(1, jsonString.length() - 1);
                     String result1 = result.replace(",", ",  ");
-                     String withoutQuotes = result1.replace("\"", "");
+                    String withoutQuotes = result1.replace("\"", "");
 
-                    // Remove all curly braces
+                    // Rimuovi parentesi
                     String withoutBraces = withoutQuotes.replace("{", " ").replace("}", " ");
 
-                    // Print response
+                    // Imposta messaggio
                     m.setText(withoutBraces + ", EUR: 1");
 
                 } catch (IOException e) {

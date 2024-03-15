@@ -47,8 +47,8 @@ public class SimilarArtistModule extends BotModule{
         else if(this.isActive()){
             
             String target[] = update.getMessage().getText().trim().split(",");
-            String artist = target[0].trim(); // Replace with your desired artist
-            int num = parseInt(target[1].trim()); // Replace with your desired song title
+            String artist = target[0].trim(); 
+            int num = parseInt(target[1].trim()); 
             String formattedArtist = artist.replace(" ", "+");
             
             String url = "https://www.music-map.com/map-search.php?f=" + formattedArtist;
@@ -57,7 +57,7 @@ public class SimilarArtistModule extends BotModule{
                 Element gnodMap = doc.getElementById("gnodMap");
                 Elements links = gnodMap.select("a");
 
-                // Skip the first link
+                // Metto tutti gli artisti eccetto il primo che era quello di input
                 for (int i = 1; i < num+1; i++) {
                     Element link = links.get(i);
                     String text = link.text();

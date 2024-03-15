@@ -54,32 +54,31 @@ public class DictionaryModule extends BotModule{
         }else if(this.isActive()){
             
             try {
-                // Encode the search term
+                // Codifico il termine da cercare
                 String encodedParola = URLEncoder.encode(s, StandardCharsets.UTF_8);
 
-                // Create URL object
+                // Crea oggetto url contenente l'API endpoint
                 URL url = new URL("https://api.urbandictionary.com/v0/define?term=" + encodedParola);
 
-                // Create connection object
+                // Apri connessione
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-                // Set request method
                 connection.setRequestMethod("GET");
 
-                // Set timeout
+                // Imposta timeout
                 connection.setConnectTimeout(5000);
                 connection.setReadTimeout(5000);
 
-                // Send GET request
+                // Prendi codice risposta
                 int responseCode = connection.getResponseCode();
 
-                // Check if the response code is successful
+                // Controlla se va tutto bene (200)
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    // Read response body
+                    // Buffered Reader per leggere la risposta
                     BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     String inputLine;
                     StringBuilder response = new StringBuilder();
 
+                    // aggiungo allo stringBuilder il testo trovato nel bufferedReader
                     while ((inputLine = in.readLine()) != null) {
                         response.append(inputLine);
                     }
@@ -87,11 +86,11 @@ public class DictionaryModule extends BotModule{
                     // Close BufferedReader
                     in.close();
 
-                    // Parse JSON response
+                    // Creo JSONObject
                     JSONObject jsonObject = new JSONObject(response.toString());
                     JSONArray list = jsonObject.getJSONArray("list");
 
-                    // Extract first two definitions and store them in a list
+                    // Salvo le prime 2 definizioni in una lista
                     List<String> definitions = new ArrayList<>();
                     for (int i = 0; i < 2 && i < list.length(); i++) {
                         JSONObject definitionObject = list.getJSONObject(i);
@@ -99,7 +98,7 @@ public class DictionaryModule extends BotModule{
                         definitions.add(definition);
                     }
 
-                    // Print the definitions
+                    // le aggiungo a una stringa
                     int i = 1;
                     for (String definition : definitions) {
                         y += i + "\t" + definition + "\n\n";
@@ -114,6 +113,8 @@ public class DictionaryModule extends BotModule{
             } catch (JSONException ex) {
                 ex.printStackTrace();
             }
+            
+            // Rimpiazzio le [] con spazi
             m.setText(y.replace("[", " ").replace("]", " "));     
         }
         else{

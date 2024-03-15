@@ -50,35 +50,27 @@ public class SportQuizModule extends BotModule{
            }
         else{
             try {
-                // Create URL object with the API endpoint
                 URL url = new URL("https://opentdb.com/api.php?amount=1&category=21&difficulty=medium&type=boolean");
 
-                // Open a connection to the URL
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-                // Set request method
+                
                 connection.setRequestMethod("GET");
 
-                // Get the response code
                 int responseCode = connection.getResponseCode();
 
-                // If the response code is successful (200)
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    // Create BufferedReader to read the response
                     BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     String inputLine;
                     StringBuilder response = new StringBuilder();
 
-                    // Read response line by line
                     while ((inputLine = in.readLine()) != null) {
                         response.append(inputLine);
                     }
                     in.close();
 
-                    // Parse JSON response
                     JsonObject jsonObject = JsonParser.parseString(response.toString()).getAsJsonObject();
 
-                    // Extract question and correct_answer
                     question = jsonObject.getAsJsonArray("results")
                                                   .get(0).getAsJsonObject()
                                                   .get("question").getAsString();
@@ -86,7 +78,7 @@ public class SportQuizModule extends BotModule{
                                                         .get(0).getAsJsonObject()
                                                         .get("correct_answer").getAsString();
 
-                    // Print the extracted values
+                    
                     //System.out.println("Question: " + question);
                     //System.out.println("Correct Answer: " + correctAnswer);
                 } else {

@@ -92,10 +92,8 @@ public class ImageModule extends BotModule{
             conn.setRequestMethod("GET");
             conn.connect();
 
-            // Check if connection is made
             int responseCode = conn.getResponseCode();
 
-            // 200 OK
             if (responseCode != 200) {
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
             } else {
@@ -107,12 +105,10 @@ public class ImageModule extends BotModule{
                     response.append(inputLine);
                 }
                 in.close();
-
-                // Convert JSON string to JSON object
+                
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode jsonNode = objectMapper.readTree(response.toString());
 
-                // Process the JSON object as needed
                 JsonNode imagesResults = jsonNode.get("images_results");
                 if (imagesResults != null && imagesResults.isArray()) {
                     JsonNode firstImageResult = imagesResults.get(0);
@@ -120,7 +116,6 @@ public class ImageModule extends BotModule{
                         String originalUrl = firstImageResult.get("original").asText();
                         url2 = firstImageResult.get("original").asText();
                         System.out.println("Original URL: " + originalUrl);
-                        //Specify URL from which file will be downloaded.
        
                     }
                 }

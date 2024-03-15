@@ -66,30 +66,25 @@ public class TranslateModule extends BotModule{
                 String testo = target[2].trim();
         
         
-                // Define the URL
         String url = "https://api.microsofttranslator.com/V2/Ajax.svc/Translate?appId=DB50E2E9FBE2E92B103E696DCF4E3E512A8826FB&oncomplete=?&text=" + testo.replace(" ", "+") + "&from=" + from + "&to=" + to;
 
-        // Create an HttpClient
         HttpClient httpClient = HttpClient.newHttpClient();
 
-        // Create an HttpRequest
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .build();
 
-        // Send the request asynchronously
         CompletableFuture<HttpResponse<String>> responseFuture = httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(TranslateModule.class.getName()).log(Level.SEVERE, null, ex);
             }
-        // Handle the response asynchronously
         CompletableFuture<String> translationResult = responseFuture.thenApply(response -> {
-            // Extract and return the translated text
+            
             if (response.statusCode() == 200) {
                 String responseBody = response.body();
-                // Use regular expression to extract text inside quotes
+                
                 Matcher matcher = Pattern.compile("\"([^\"]*)\"").matcher(responseBody);
                 if (matcher.find()) {
                     return matcher.group(1); // Extract the text inside quotes
@@ -101,11 +96,8 @@ public class TranslateModule extends BotModule{
             }
             });
 
-            // Block and get the translation result
             translation = translationResult.join();
 
-            // Print the translation
-            //System.out.println(translation);
             m.setText(translation);
 
             }

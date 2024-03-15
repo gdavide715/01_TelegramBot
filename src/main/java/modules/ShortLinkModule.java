@@ -65,7 +65,6 @@ public class ShortLinkModule extends BotModule{
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
 
-            // Request body
             String requestBody = "{\"url\": \"%s\"}";
             String originalUrl = target;
             requestBody = String.format(requestBody, originalUrl);
@@ -105,13 +104,10 @@ public class ShortLinkModule extends BotModule{
         
         
 
-        // Parse JSON string
         JSONObject jsonObject = new JSONObject(jsonString);
 
-        // Get the value of shrtlnk
         String shrtlnk = jsonObject.getString("shrtlnk");
 
-        // Print the value of shrtlnk
         //System.out.println("Value of shrtlnk: " + shrtlnk);
         
         m.setText(shrtlnk);
